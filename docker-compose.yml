@@ -1,0 +1,14 @@
+# docker-compose up -d
+# docker-compose up --build
+# docker-compose down
+
+version: "3.6"
+
+services:
+  netcore-boilerplate:
+    image: netcore-boilerplate:local
+    container_name: netcore-boilerplate
+    build:
+      context: .
+    ports:
+      - 80:80

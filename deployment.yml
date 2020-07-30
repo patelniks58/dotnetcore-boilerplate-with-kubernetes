@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: centaurus-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: centaurus-app
+  template:
+    metadata:
+      labels:
+        app: centaurus-app
+    spec:
+      containers:
+      - name: centaurus-app
+        image: webapp:1
+        # for local development against minikube registry
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: centaurus-service
+  labels:
+    app: centaurus-service
+spec:
+  type: NodePort
+  ports:
+    # the port that this service should serve on
+    - port: 80
+      targetPort: 80
+  # label keys and values that must match in order to receive traffic for this service
+  selector:
+    app: centaurus-app
